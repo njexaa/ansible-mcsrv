@@ -1,0 +1,32 @@
+---
+- name: MineCraft Server files copying
+  hosts: mc_srv
+  gather_facts: false
+  become: false
+
+  tasks:
+
+  - name: Copy server files
+    copy:
+      src: "./files/{{ item }}"
+      dest: "{{ mcsrv_folder }}"
+      mode: 0777
+    loop: "{{ mcsrv_files }}"
+
+  - name: Accept EULA
+    template:
+      src: "eula.j2"
+      dest: "{{ mcsrv_folder }}/eula.txt"
+      mode: '0444'
+
+  - name: Copy server properties file
+    template:
+      src: "server.properties.j2"
+      dest: "{{ mcsrv_folder }}/server.properties"
+      mode: '0644'
+
+  - name: Copy start script file
+    template:
+      src: mcstart.j2
+      dest: "{{ mcsrv_folder }}/start.sh"
+      mode: '0744'

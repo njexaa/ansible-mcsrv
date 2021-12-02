@@ -1,0 +1,33 @@
+---
+
+- name: OpenJDK installation
+  hosts: mc_srv
+  gather_facts: false
+  become: true
+
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: true
+
+  - name: Upgrade apt
+    apt:
+      upgrade: true
+
+  - name: Install OpenJDK
+    apt:
+      name: openjdk-16-jdk-headless
+
+- import_playbook: copymcsrvfiles.yaml
+
+
+- name: Start MineCraft server
+  hosts: mc_srv
+  gather_facts: false
+  become: false
+
+  tasks:
+  - name: Run server
+    command: "screen -dmS mcsrv {{ mcsrv_start_script }}"
+    args:
+      chdir: "{{ mcsrv_folder }}"

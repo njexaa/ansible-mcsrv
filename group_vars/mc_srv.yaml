@@ -1,0 +1,13 @@
+---
+user_folder: "/home/{{ ansible_user }}"
+mcsrv_folder: "{{ user_folder }}/minecraftsrv/"
+mcsrv_files:
+  - server.jar
+mcsrv_start_script_name: "start.sh"
+mcsrv_start_script: "{{ mcsrv_folder }}{{ mcsrv_start_script_name }}"
+mcsrvprops_gamemode: "creative"
+mcsrvprops_max_players: "15"
+mcsrvprops_allow_flight: "true"
+mcsrvprops_pvp: "true"
+mcsrvprops_online_mode: "false"
+mcsrvprops_eula_acception: "true"
